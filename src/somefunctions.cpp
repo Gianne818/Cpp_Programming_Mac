@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <functional>
 using namespace std;
 
 struct Person {
@@ -34,9 +35,24 @@ int addNum (int a, int b, int c){
     return a+b+c;
 }
 
-int main (){
-    cout << addNum(1, 2) << endl;
-    cout << addNum (1.1, 2.2) << endl;
-    cout << addNum(1, 2, 3);
 
+//Lamda
+void sampleFunctionLambda (function<int(int a, int b)> myFunc){
+
+    cout << myFunc(1, 2);
 }
+
+int main (){
+    string hi = "The result is: ";
+    auto myFunc = [&hi](int a, int b) {
+        cout << hi;
+        return a+b;
+    };
+
+    sampleFunctionLambda(myFunc);
+    cout << endl;
+    hi = "Yes the result is this: ";
+    sampleFunctionLambda(myFunc);
+}
+
+
