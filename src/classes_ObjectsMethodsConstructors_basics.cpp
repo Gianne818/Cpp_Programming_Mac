@@ -20,7 +20,7 @@ class bird {
         specie = sp;
     }
 
-    //Constructor Overloading - set default values, useful when no value is set
+    //Constructor Overloading - set default values, useful when no value is set; must have diff param.
     bird (){
         wingspan = 0.0;
         specie = "Unknown";
