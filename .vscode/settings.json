@@ -1,7 +1,10 @@
 {
     "files.associations": {
         "fstream": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "iostream": "cpp",
+        "bitset": "cpp",
+        "new": "cpp"
     },
     "explorer.sortOrder": "modified"
 }

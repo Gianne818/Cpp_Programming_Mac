@@ -36,21 +36,28 @@ int addNum (int a, int b, int c){
 }
 
 
-//Lamda
+//Lamda funcs are small, anonymous functions when you need a quick functions without naming or declaring
+//Passing Kambdas to Functions
+//function<return_type(params)> func_name
 void sampleFunctionLambda (function<int(int a, int b)> myFunc){
-
     cout << myFunc(1, 2);
 }
 
 int main (){
     string hi = "The result is: ";
+    //lambda
+    //the capture claus [] is to give access to variables outside of the function
     auto myFunc = [&hi](int a, int b) {
         cout << hi;
         return a+b;
     };
 
+    cout << myFunc(1, 2) << endl;
+    
+
     sampleFunctionLambda(myFunc);
     cout << endl;
+
     hi = "Yes the result is this: ";
     sampleFunctionLambda(myFunc);
 }

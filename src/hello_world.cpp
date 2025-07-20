@@ -6,9 +6,9 @@ int main () {
     int s;
     cout << "Enter the size of the array: ";
     cin >> s;
-    int arr[s];
+    float arr[s]; //not good since in standard c++ specification, variable length arrays are not supported, and must be hardcoded
     int ind = 0;
-    for (int &i : arr) {
+    for (float &i : arr) {
         cout << "Enter arr[" << ind << "]: ";
         cin >> i;
         ind++;
