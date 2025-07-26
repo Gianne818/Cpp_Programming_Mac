@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdlib.h>
 using namespace std;
 
 //Stack data structure is a linear data structure that follows the principle LIFO to store elements.
@@ -8,6 +7,7 @@ using namespace std;
 //The last element added is the first to be removed.
 //It restricts adding or removing elements to only one end called the top.
 //Example is undo and redo.
+//Following is an array implementation, but can also be implemented using linked lists.
 
 #define MAX 5
 
@@ -24,6 +24,7 @@ public:
     int peek();
     int sizeOfStack() const;
     void displayStack();
+    void displayStackLifo();
 };
 
 bool Stack::isEmpty(){
@@ -71,6 +72,13 @@ void Stack::displayStack(){
     }
 }
 
+void Stack::displayStackLifo(){
+    cout << "The stack (in LIFO):\n";
+    for (int i = top; i>=0; i--){
+        cout << items[i] << endl;
+    }
+}
+
 int main (){
     Stack s1;
     (s1.isEmpty() ? cout << "Stack is empty.\n" : cout << "Stack is not empty.\n");
@@ -99,4 +107,10 @@ int main (){
     s1.pop();
     s1.pop();
     cout << "Size of stack: " << s1.sizeOfStack() << endl;
+    cout << endl << endl << endl;
+
+    s1.push(2);
+    s1.push(3);
+    s1.push(4);
+    s1.displayStackLifo();
 }
