@@ -1,0 +1,26 @@
+Tree data structure is similar to linked list, in that each node contains data and can be linked to other nodes.
+Previous data structures discussed have all been linear data structure.
+Trees however, can branch out to different directions, with multiple next elements.
+
+It is useful in many cases:
+- Hierarchical data
+- Databases for quick data retrieval
+- In network algorithms
+- Sorting and searching for data
+- Priority queues
+
+Parts:
+- Root node
+- Edges (link)
+- nodes
+- Leaf nodes (nodes without child)
+- Child nodes
+- Parent nodes
+- Tree height (0-based index, since it refers to number of edges from root to leaf)
+- Tree size (total number of nodes.)
+
+Types of Trees: 
+- Regular Tree - can have fluctuating amount of children.
+- Binary Trees - each node has up to two children; the foundation for more complex trees.
+- Binary Search Trees(BST) - the left child node has a lower value, and the right child node has higher value.
+- AVL Trees - Self balancing tree –– every node's difference in height between left and right subtrees is at most one. Balance is maintained through roration when nodes are inserted or deleted. 

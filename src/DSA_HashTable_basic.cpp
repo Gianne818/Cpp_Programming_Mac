@@ -5,10 +5,14 @@ using namespace std;
 
 //A Hash Table is a data structure that allows fast searching, adding, and deleting of data.
 //It is faster than arrays or linked lists as it uses a hash function to directly find the data.
+//Particularly useful for large amounts of data.
 //A hash function converts a key (like string) into an index.
 //Collision happens when two values get the same index.
 //Collision handling with Chaining (Using Linked List)
-//Some collision handling involve incrementing an index by 1 
+//Some collision handling involve incrementing an index by 1. 
+//Example, we can use key (word) to get the value (definition). This is a hash map implementation.
+//The example below  is an implementation of a hash table in the form of a hash set 
+
 
 #define MAX 5
 list<string> hashList[MAX]; //an array of lists
@@ -38,27 +42,17 @@ bool search(string str){
     }
     return false;
 }
-/* THIS IMPLEMENTATION USES ITERATORS
+ //THIS IMPLEMENTATION USES ITERATORS
 void deleteData(string str){
-    int index = hashFunction(str); // Find the bucket using the hash function
-    // Iterate through the list in the corresponding bucket
-    for (auto i = hashList[index].begin(); i != hashList[index].end(); ++i){
-        if (*i == str){ // If the element is found
-            hashList[index].erase(i); // Erase the element
-            cout << str << " has been deleted from bucket " << index << ".\n";
+    int index = hashFunction(str);
+    for (list<string>::iterator it = hashList[index].begin(); it!=hashList[index].end(); it++){
+        if(*it==str){
+            hashList[index].erase(it);
+            cout << str << " has been deleted from the bucket.\n";
             return;
         }
     }
-    cout << str << " not found in the hash table.\n";
-}
-*/
-
-void deleteData(std::string str) {
-    int index = hashFunction(str);
-    
-    // Remove all instances of str from the list at hashList[index]
-    hashList[index].remove(str);
-    cout << "Deleted.\n";
+    cout << str << " is not found in the hash table.\n";
 }
 
 
@@ -105,6 +99,17 @@ int main (){
     containsInWords("gianne");
     containsInWords("sami");
     containsInWords("saffron");
+
+    display();
+
+    cout << endl << endl;
+
+    deleteData("acr");
+    deleteData("lion");
+    deleteData("tiger");
+    deleteData("Melon");
+    deleteData("Lemon");
+    deleteData("lemon");
 
     display();
 }
