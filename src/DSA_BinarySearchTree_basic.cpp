@@ -98,8 +98,6 @@ Node* Tree::deleteNode(Node* root, int data){
         //we dont delete the actual node.
         //instead, we change the value of the node to its in-order successor.
         //we delete the actual in-order successor node.
-
-
     }
     return root;
 }
@@ -117,6 +115,9 @@ int main (){
     cout << endl;
 
     cout << "The minimum value node is: " << t1.minValueNode(root)->data << endl;
+    t1.deleteNode(root, 7);
+
+    t1.inOrderTraversal(root);
 
 }
 
