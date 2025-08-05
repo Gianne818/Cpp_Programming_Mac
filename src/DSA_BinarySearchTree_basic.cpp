@@ -25,7 +25,7 @@ public:
     Node* search(Node* root, int target);
     Node* insert(Node* root, int data);
     Node* minValueNode(Node* root);
-    void deleteNode(Node* root, int data);
+    Node* deleteNode(Node* root, int data);
 };
 
 void Tree::inOrderTraversal(Node* root){
@@ -40,7 +40,7 @@ Node* search(Node* root, int target){
     if(root==nullptr || root->data==target){
         return root;
     }
-    if(target<root->data) {
+    if(target < root->data) {
         return search(root->left, target);
     }
     return search(root->right, target);
@@ -59,6 +59,51 @@ Node* Tree::insert(Node* root, int data){
     //Previous function calls have no return statement.
 }
 
+Node* Tree::minValueNode(Node* root){
+    Node* temp = root;
+    while(temp->left!=nullptr){
+        temp = temp->left;
+    }
+    return temp;
+}
+
+
+Node* Tree::deleteNode(Node* root, int data){
+    if(root==nullptr) return root;
+
+    if(data < root->data){
+        root->left =  deleteNode(root->left, data);
+    } else if (data > root->data){
+        root->right = deleteNode(root->right, data);
+    } 
+    
+    else {
+        //if one child, left is empty
+        if(root->left==nullptr){
+            Node* temp = root->right;
+            delete root;
+            return temp; //returns to the previous if/else-if statements and reconnect to parent to maintain bst.
+        }
+        //if one child, right is empty
+        if(root->right==nullptr){
+            Node* temp =  root->left;
+            delete root;
+            return temp;
+        }
+
+        //if deleted node has children both left and right
+        Node* temp = minValueNode(root->right);
+        root->data = temp->data;
+        root->right = deleteNode(root->right, temp->data);
+        //we dont delete the actual node.
+        //instead, we change the value of the node to its in-order successor.
+        //we delete the actual in-order successor node.
+
+
+    }
+    return root;
+}
+
 int main (){
     Tree t1;
     Node* root = new Node(7);
@@ -70,6 +115,8 @@ int main (){
 
     t1.inOrderTraversal(root);
     cout << endl;
+
+    cout << "The minimum value node is: " << t1.minValueNode(root)->data << endl;
 
 }
 
