@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-//encapsulation is mainly to prevent accidental modification of data, hence using private data but public methods.
+//encapsulation is mainly to prevent accidental modification of data, hence using private data but public getters/setters methods.
 
 class Employee {
     private:

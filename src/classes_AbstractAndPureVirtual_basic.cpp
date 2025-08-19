@@ -8,7 +8,7 @@ using namespace std;
 
 
 //Class animal is an abstract class
-class Animal {
+class Animal { //class is private by default
 public: 
     //equating a virtual func to 0 makes it a pure virtual
     //It forces all derived class to make an implementation of the function

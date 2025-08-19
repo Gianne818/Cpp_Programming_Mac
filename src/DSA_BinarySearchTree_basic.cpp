@@ -36,7 +36,7 @@ void Tree::inOrderTraversal(Node* root){
     inOrderTraversal(root->right);
 }
 
-Node* search(Node* root, int target){
+Node* Tree::search(Node* root, int target){
     if(root==nullptr || root->data==target){
         return root;
     }
@@ -102,6 +102,8 @@ Node* Tree::deleteNode(Node* root, int data){
     return root;
 }
 
+
+
 int main (){
     Tree t1;
     Node* root = new Node(7);
@@ -118,6 +120,9 @@ int main (){
     t1.deleteNode(root, 7);
 
     t1.inOrderTraversal(root);
+
+    cout << endl << endl;
+    t1.search(root, 13) ? cout << "Exists. " << t1.search(root, 13)->data << endl : cout << "Does not exist.\n";
 
 }
 
