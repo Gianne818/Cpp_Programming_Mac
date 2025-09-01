@@ -74,10 +74,14 @@ public:
     }
 
     void flip(){
-        for (int i = 0; i<size-1; i++){
-            int temp = array[i];
-            array[i] = array[i+1];
-            array[i+1] = temp;
+        int start = 0, end = size-1;
+        while((start)<(end)){
+            int temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+
+            start++;
+            end--;
         }
     }
 };
