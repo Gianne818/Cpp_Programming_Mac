@@ -83,5 +83,55 @@ public:
             start++;
             end--;
         }
+        cout << "Flipped successfully.\n";
+    }
+
+    void clear(){
+        for (int i = 0; i<size; i++){
+            array[i] = 0;
+        }
+        size = 0;
+        cout << "Array cleared successfully.\n";
+    }
+
+    void addAtPos(int num, int pos){
+        if(pos>size || pos < 1){
+            cout << "Invalid position. Enter 1 to " << size << "." << endl;
+            return;
+        }
+        for (int i = size-1; i>=pos; i--){
+            array[i] = array[i-1];
+        }
+        array[pos-1] = num;
+        size++;
+        cout << "Successfully added " << array[pos-1] << endl;
+    }
+
+    int removeAllInstance(int num){
+        int numRemoved = 0;
+        for (int i = 0; i<size; i++){
+            if(array[i]==num){
+                for (int j = i; j<size; j++){
+                    array[j] = array[j+1];
+                }
+                numRemoved++;
+                array[--size] = 0;
+                i--;
+            }
+        }
+        return numRemoved;
+    }
+
+    int removeAtPos(int pos){
+        if(pos>size || pos < 1){
+            cout << "Invalid position. Enter 1 to " << size << "." << endl;
+            return 0;
+        }
+        int temp = array[pos-1];
+        for (int i = pos-1; i<size; i++){
+            array[i] = array[i+1];
+        }
+        array[--size] = 0;
+        return temp;
     }
 };

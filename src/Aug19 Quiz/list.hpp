@@ -9,5 +9,8 @@ public:
     /*3*/virtual int removeLast() = 0; //remove last element and return removed element. if there is nothing to remove, return -1.
 
     /*7*/virtual void flip() = 0; //reverse whole array.
-
+    /*8*/ virtual void clear() = 0; //clear the array;
+    /*9*/ virtual void addAtPos(int, int) = 0; //add at specified position
+    /*10*/ virtual int removeAllInstance(int) = 0; //remove all instances of specified number and return the number of removed elements.
+    /*11*/ virtual int removeAtPos(int) = 0; //remove element at specified index.
 };

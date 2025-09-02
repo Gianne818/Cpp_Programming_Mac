@@ -6,7 +6,8 @@ int main (){
     List* l = new ArrayList();
     cout << "Options:" << endl;
     cout << "a. Add\n" << "b. Print\n" << "c. Remove\n" << "d. Add at first index.\n" << "e. Remove first element.\n" << 
-     "f. Remove last element.\n" << "i. Flip array\n" << "x. Exit\n";
+     "f. Remove last element.\n" << "i. Flip array\n" << "j. Clear array.\n"  << "k. Add at position.\n"
+      << "l. Remove all instance.\n" << "m. Remove at position.\n"  << "x. Exit\n";
 
     char op;
     int num, pos;
@@ -67,6 +68,32 @@ int main (){
 
             case 'i':
                 l->flip();
+                break;
+            
+            case 'j':
+                l->clear();
+                break;
+
+            case 'k':
+                cout << "Enter number to add: ";
+                cin >> num;
+                cout << "Enter position: ";
+                cin >> pos;
+                l->addAtPos(num, pos);
+                break;
+            
+            case 'l':
+                cout << "Enter the number to remove: ";
+                cin >> num;
+                res = l->removeAllInstance(num);
+                cout << "Succesfully removed " << res << " elements.\n";
+                break;
+
+            case 'm':
+                cout << "Enter position of element to remove: ";
+                cin >> pos;
+                res = l->removeAtPos(pos);
+                cout << "Successfully removed: " << res << endl;
                 break;
 
             case 'x':
