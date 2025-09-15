@@ -12,5 +12,7 @@ public:
     /*8*/ virtual void clear() = 0; //clear the array;
     /*9*/ virtual void addAtPos(int, int) = 0; //add at specified position
     /*10*/ virtual int removeAllInstance(int) = 0; //remove all instances of specified number and return the number of removed elements.
-    /*11*/ virtual int removeAtPos(int) = 0; //remove element at specified index.
+    /*11*/ virtual int removeAtPos(int) = 0; //remove element at specified index. 
+    /*12*/ virtual void sortDescending() = 0;//sort array
+    /*13*/ virtual int positionOf(int) = 0; //returns the position of value. if none, return -1.
 };

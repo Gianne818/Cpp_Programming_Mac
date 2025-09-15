@@ -9,6 +9,10 @@ private:
     Entry scoreboard[5];
 
 public:
+    ArrayList(){}
+    ArrayList(int size){
+        this->size = size;
+    }
     void add (Entry* e){
         if(size==5){
             if(e->score < scoreboard[4].score){

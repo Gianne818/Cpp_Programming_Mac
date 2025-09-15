@@ -7,7 +7,7 @@ int main (){
     cout << "Options:" << endl;
     cout << "a. Add\n" << "b. Print\n" << "c. Remove\n" << "d. Add at first index.\n" << "e. Remove first element.\n" << 
      "f. Remove last element.\n" << "i. Flip array\n" << "j. Clear array.\n"  << "k. Add at position.\n"
-      << "l. Remove all instance.\n" << "m. Remove at position.\n"  << "x. Exit\n";
+      << "l. Remove all instance.\n" << "m. Remove at position.\n" << "n. Sort descending.\n" <<"o. Get Position.\n" << "x. Exit\n";
 
     char op;
     int num, pos;
@@ -94,6 +94,21 @@ int main (){
                 cin >> pos;
                 res = l->removeAtPos(pos);
                 cout << "Successfully removed: " << res << endl;
+                break;
+            
+            case 'n':
+                l->sortDescending();
+                break;
+
+            case 'o':
+                cout << "Enter number to find: ";
+                cin >> num;
+                res = l->positionOf(num);
+                if(res==-1){
+                    cout << "Number not found.\n";
+                } else {
+                    cout << num << " is at position " << res << endl; 
+                }
                 break;
 
             case 'x':

@@ -134,4 +134,24 @@ public:
         array[--size] = 0;
         return temp;
     }
+
+    void sortDescending(){
+        for (int i = 1; i<size; i++){
+            if(array[i]>array[i-1]){
+                int temp = array[i];
+                array[i] = array[i-1];
+                array[i-1] = temp;
+                i = 0;
+            }
+        }
+    }
+
+    int positionOf(int num){
+        for (int i = 0; i<size; i++){
+            if(array[i]==num){
+                return i+1;
+            }
+        }
+        return -1;
+    }
 };
