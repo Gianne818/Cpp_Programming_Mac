@@ -10,7 +10,7 @@ int main (){
     int pos;
     Node* temp = new Node();
     cout << "Options: " << endl << "a. Add\n" << "b. Print\n" << "c. Remove Head.\n" << "d. Remove Tail\n" << "e. Find num\n" << 
-    "f. insertAt\n" << "g. removeAt\n" << "x. Exit\n";
+    "f. insertAt\n" << "g. removeAt\n" << "h. removeAll\n" << "x. Exit\n";
     do {
         cout << "Enter option: ";
         cin >> op;
@@ -71,6 +71,12 @@ int main (){
                 } else {
                     cout << "Removed " << val << endl;
                 }
+                break;
+            case 'h':
+                cout << "Enter number to remove all instances of: ";
+                cin >> val;
+                pos = list->removeAll(val);
+                cout << "Removed " << pos << " elements.\n";
                 break;
 
             case 'x':

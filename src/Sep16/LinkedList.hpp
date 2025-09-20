@@ -178,6 +178,26 @@ public:
 
     }
 
+    int removeAll(int num){
+        int pos = 1;
+        int count = 0;
+        Node* temp = head;
+        while(temp){
+            if(temp->elem == num){
+                removeAt(pos);
+                count++;
+                temp = head;
+                for (int i = 1; i<pos; i++){
+                    temp = temp->next;
+                }
+            } else {
+                temp = temp->next;
+                pos++;
+            }
+        }
+        return count;
+    }
+
     ~LinkedList(){
         cout << "DESTRUCT" << endl;
         while(head){

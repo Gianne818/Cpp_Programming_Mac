@@ -8,5 +8,6 @@ public:
     virtual Node* find(int) = 0;
     virtual void insertAt(int, int) = 0;
     virtual int removeAt(int) = 0;
+    virtual int removeAll(int) = 0;
 
 };
