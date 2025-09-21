@@ -70,12 +70,12 @@ int main (){
                 }
                 break;
                 
-            // case 'h':
-            //     cout << "Enter number to remove all instances of: ";
-            //     cin >> val;
-            //     pos = list->removeAll(val);
-            //     cout << "Removed " << pos << " elements.\n";
-            //     break;
+            case 'h':
+                cout << "Enter number to remove all instances of: ";
+                cin >> val;
+                pos = list->removeAll(val);
+                cout << "Removed " << pos << " elements.\n";
+                break;
 
             case 'i':
                 list->reversePrint();

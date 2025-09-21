@@ -136,6 +136,34 @@ public:
 
     }
 
+    void addMid(int num){
+        node* temp = head;
+        node* n = new node();
+        n->elem = num;
+
+        if(!head){
+            head = tail = n;
+            size++;
+            return;
+        } else if(size==1){
+            n->next = head;
+            head->prev = n;
+            head = n;
+            size++;
+            return;
+        }
+        for (int i = 1; i<size/2; i++){
+            temp = temp->next;
+        }
+        temp->next->prev = n;
+        n->next = temp->next;
+        n->prev = temp;
+        temp->next = n;
+
+        size++;
+    }
+
+
     void print(){
         node* temp = head;
         if(size==0){
