@@ -30,6 +30,7 @@ class linkedList : public list{
         return val;
     }
 
+
     public:
 
     linkedList(){
@@ -111,6 +112,22 @@ class linkedList : public list{
             temp = temp->next;
         }
         addBetween(num, temp, temp->next);
+    }
+
+    void addAt(int num, int pos){
+        if (pos<1 || pos>size){
+            cout << "Invalid position.";
+            return;
+        }
+        node* n = new node();
+        n->elem = num;
+        node* temp = head.next;
+        int ctr = 1;
+        while(ctr<pos){
+            temp = temp->next;
+            ctr++;
+        }
+        addBetween(num, temp->prev, temp);
     }
     
     void print(){

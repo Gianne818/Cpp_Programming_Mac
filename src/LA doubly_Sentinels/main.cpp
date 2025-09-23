@@ -10,7 +10,8 @@ int main (){
     int pos;
     node* temp = new node();
     cout << "Options: " << endl << "a. Add\n" << "b. Print\n" << "c. Add Head\n" << "d. Add Tail\n" << "e. get\n" << 
-    "f. remove\n" << "g. removeAt\n" << "h. removeAll\n" << "i. Reverse Print\n" << "j. Add Middle\n" << "x. Exit\n";
+    "f. remove\n" << "g. removeAt\n" << "h. removeAll\n" << "i. Reverse Print\n" << "j. Add Middle\n"
+    << "k. Add at\n" << "x. Exit\n";
     do {
         cout << "Enter option: ";
         cin >> op;
@@ -85,6 +86,14 @@ int main (){
                 cout << "Enter number to add to mid: ";
                 cin >> val;
                 list->addMid(val);
+                break;
+            
+            case 'k':
+                cout << "Enter number to add: ";
+                cin >> val;
+                cout << "Enter position to insert: ";
+                cin >> pos;
+                list->addAt(val, pos);
                 break;
 
             case 'x':

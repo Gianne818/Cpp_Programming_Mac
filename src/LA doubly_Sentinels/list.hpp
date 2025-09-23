@@ -12,5 +12,5 @@ class list {
     virtual int removeAll(int) = 0;
     virtual void addMid(int) = 0;
 
-    //virtual int addAt(int num) = 0;
+    virtual void addAt(int num, int pos) = 0;
 };
