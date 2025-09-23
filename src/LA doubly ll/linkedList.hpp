@@ -163,6 +163,35 @@ public:
         size++;
     }
 
+    int removeAll(int num){
+        node* temp = head;
+        int count = 0;
+        while(temp){
+            node* toDelete = temp;
+            if(temp->elem == num){
+                if(temp==head){
+                    if(head==tail){
+                        head = tail = nullptr;
+                    } else {
+                        head = head->next;
+                    }
+                } else if(temp==tail){
+                    tail = tail->prev;
+                    tail->next = nullptr;
+                } else {
+                    temp->prev->next = temp->next;
+                    temp->next->prev = temp->prev;
+                }
+                temp = temp->next;
+                free(toDelete);
+                size--;
+                count++;
+            } else {
+                temp = temp->next;
+            }
+        }
+        return count;
+    }
 
     void print(){
         node* temp = head;
