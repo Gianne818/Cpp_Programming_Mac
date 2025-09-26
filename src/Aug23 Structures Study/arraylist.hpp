@@ -88,7 +88,7 @@ public:
     }
 
     void displayScoreBoard(){
-        for (int i = 0; i<6; i++){
+        for (int i = 0; i<5; i++){
             cout << "Place " << i+1 << ": " << scoreboard[i].name << ", " << scoreboard[i].score << endl;
         }
     }

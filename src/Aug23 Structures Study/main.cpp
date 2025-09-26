@@ -27,11 +27,11 @@ int main (){
                 break;
             
             case 'b':
-                list->print();
+                list->displayScoreBoard();
                 break;
             
             case 'c':
-                list->displayScoreBoard();
+                list->print();
                 break;
 
             
