@@ -7,7 +7,7 @@ using namespace std;
 int  postFix(vector<string>);
 
 int main (){
-    vector<string> s = {"9", "+", "10", "10", "+"};
+    vector<string> s = {"-5", "6", "+"};
     int res = postFix(s);
     if(res==-1){
         cout << "Invalid input."<< endl;
@@ -21,12 +21,12 @@ int postFix(vector<string> pf){
     stack<int> s;
     int size = (pf).size();
 
-    if(size<=2 || !isdigit((pf[0][0])) || (size>2 && !isdigit(pf[1][0]))){
+    if(size<=2 || !isdigit((pf[0][0])) || (size>=2 && !isdigit(pf[1][0]))){
         return -1;
     }
 
     for (int i = 0; i<size; i++){
-        if((isdigit(pf[i][0]) || isdigit(pf[i][1] ))){
+        if((isdigit(pf[i][0]) || isdigit(pf[i][1]) && pf[i][0]=='-')){
             s.push(stoi(pf[i]));
         } else {
             char c = pf[i][0];
