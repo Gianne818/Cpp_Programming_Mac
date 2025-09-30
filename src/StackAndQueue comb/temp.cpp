@@ -2,11 +2,13 @@
 // #include "Queue.hpp"
 // #include <string>
 // #include "StackInt.cpp"
+// #include <sstream>
 // using namespace std;
 
 // bool isValid(string);
 // int postEval(string);
 // string makeInfix(string);
+// int postEval(string s[5]);
 
 // int main (){
 //     cout << "--------Balanced Parentheses-------\n";
@@ -59,15 +61,30 @@
     
     
 //     cout << "--------Postfix evaluation-------\n";
-//     string pf;
+//     string pf, token, noSpace;
 //     cout << "Enter postfix string: ";
-//     cin >> pf;
-//     int res2 = postEval(pf);
+//     getchar();
+//     getline(cin, pf);
+    
+//     stringstream ss(pf);
+//     while(ss >> token){
+//         noSpace += token;
+//     }
+    
+//     int res2 = postEval(noSpace);
 //     cout << "Result: " << res2 << endl;
     
 //     cout << "--------Making it infix-------\n";
-//     string res3 = makeInfix(pf);
+//     string res3 = makeInfix(noSpace);
 //     cout << "Result: " << res3 << endl;
+    
+//     cout << "--------Postfix evaluation array of string-------\n";
+//     string arr[5] = {"9", "3", "2", "+", "*"};
+//     int res4 = postEval(arr);
+//     cout << "Result: " << res4 << endl;
+    
+    
+    
     
 // }
 
@@ -82,24 +99,9 @@
 //             char op = s[i];
 //             char b = st->top(); st->pop();
 //             char a = st->top(); st->pop();
-//             if(a && b){
-//                 temp += '(';
-//                 temp+= a;
-//                 temp+= op;
-//                 temp+= b;
-//                 temp+= ')';
-//             } else if(!a){
-//                 temp+='(';
-//                 temp+=b;
-//                 temp+=')';
-//             } 
-//             // else {
-//             //     temp += '(';
-//             //     temp+= a;
-//             //     temp+= op;
-//             //     temp+= b;
-//             //     temp+= ')';
-//             // }
+//             temp += a;
+//             temp+= op;
+//             temp+=b;
 //         }
 //     }
 //     return temp;
@@ -116,6 +118,32 @@
 //             char c = s[i];
 //             int stSize = st->size;
 //             if(stSize<2) break;
+//             int b = st->top(); st->pop();
+//             int a = st->top(); st->pop();
+            
+//             switch(c){
+//                 case '+': st->push(a+b); break;
+//                 case '-': st->push(a-b); break;
+//                 case '*': st->push(a*b); break;
+//                 case '/': st->push(a/b); break;
+//             }
+//         }
+//     }
+//     return st->top();
+// }
+
+// int postEval(string s[5]){
+//     StackInt* st = new StackInt();
+//     //int size = s.length();
+    
+//     for (int i = 0; i<5; i++){
+//         string temp = s[i];
+//         if(isdigit(temp[0]) || (temp.length() >= 2 && isdigit(temp[1]))){
+//             st->push(stoi(s[i]));
+//         } else {
+//             int stSize = st->size;
+//             char c = temp[0];
+//             if(stSize<2) return st->top();
 //             int b = st->top(); st->pop();
 //             int a = st->top(); st->pop();
             
