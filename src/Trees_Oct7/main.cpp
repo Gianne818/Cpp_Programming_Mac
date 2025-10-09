@@ -21,7 +21,7 @@ int main (){
         tree->addChild(thirteen->children[1]->children[0], 16);
         cout << "Number of children removed: " << tree->remove(thirteen->children[0]) << endl;
         cout << "Number of children removed: " << tree->remove(thirteen->children[1]) << endl;
-        cout << "Number of children removed: " << tree->remove(thirteen->children[2]) << endl;
+        cout << "Number of children removed: " << tree->remove(thirteen->children[1]) << endl;
 
     } catch(exception& e){
         cout << e.what();
