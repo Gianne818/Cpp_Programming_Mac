@@ -40,7 +40,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "__node_handle": "cpp"
     },
     "explorer.sortOrder": "modified"
 }
