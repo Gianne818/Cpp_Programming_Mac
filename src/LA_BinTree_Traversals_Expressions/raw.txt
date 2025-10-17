@@ -1,0 +1,169 @@
+#include "node.hpp"
+#include "arrayqueue.hpp"
+class BinaryTree {
+    public:
+    virtual node* left(node*) = 0;
+    virtual node* right(node*) = 0;
+    virtual node* addRoot(int e) = 0;
+    virtual node* addLeft(node* p, int e) = 0;
+    virtual node* addRight(node* p, int e) = 0;
+    virtual node* getRoot() = 0;
+    virtual void print() = 0;
+
+    // TODO traversals using the above virtual methods already implemented, though hidden
+    void preorder() {
+        cout << "PREORDER: ";
+        preorderHelper(getRoot());
+    }
+    
+    void preorderHelper(node* n) {
+        if(!n) return;
+        cout << n->elem << " ";
+        preorderHelper(n->left);
+        preorderHelper(n->right);
+    }
+    
+    void inorder() {
+        cout << "INORDER: ";
+        inorderHelper(getRoot());
+    }
+    
+    void inorderHelper(node* n) {
+        if(!n) return;
+        cout << n->elem << " ";
+        inorderHelper(n->left);
+        inorderHelper(n->right);
+    }
+    
+    
+    void postorder() {
+        cout << "POSTORDER: ";
+        postorderHelper(getRoot());
+    }
+    
+    void postorderHelper(node* n) {
+        if(!n) return;
+        cout << n->elem << " ";
+        postorderHelper(n->left);
+        postorderHelper(n->right);
+    } 
+    
+    
+    void breadthfirst() {
+        cout << "BREADTHFIRST: ";
+        Queue* queue = new ArrayQueue();
+        if(!getRoot()) return;
+        queue->enqueue(getRoot());
+        
+        while(!queue->isEmpty()){
+            node* temp =queue->first();
+            queue->dequeue();
+            cout << temp->elem <<  " ";
+            if(temp->left) queue->enqueue(temp->left);
+            if(temp->right) queue->enqueue(temp->right);
+            
+        }
+    }
+};
+
+------------------------------------------------------------------
+
+#include <iostream>
+#include "arraystack.hpp"
+using namespace std;
+
+int main (){
+    Stack st* = new ArrayStack();
+    string s;
+    while(true){
+        cout << "Enter: ";
+        cin >> s;
+
+        if(s == "x) break;
+        if(isdigit(s[0])){
+            st->push(s);
+        } else if(st->isEmpty()){
+            break;
+        } else {
+            if(st->size() < 2) break;
+            string b = st->pop();
+            string a = st->pop();
+            string temp = s + " " + a + " " + b;
+            st->push(temp);
+        }
+    }
+
+    cout << "Prefix: ";
+    while(!st->isEmpty()){
+        cout << st->pop() + " ";
+    }
+}
+
+
+-------------------------------------------------------------------
+
+// 1. Go to the opInput method.
+// 2. Go to node.h's evaluate method.
+#include <iostream>
+#include "mybinarytree.hpp" // already implemented, though hidden.
+using namespace std;
+
+node* opInput(MyBinaryTree* tree, string prompt, node* parent);
+
+int main(void) {
+    MyBinaryTree* tree = new MyBinaryTree();
+    char op;
+    int input, ind;
+    node* nodes[100];
+    int res;
+    tree->root = opInput(tree, "root", NULL);
+    do {
+        cout << "Op: ";
+        cin >> op;
+        switch (op) {
+            case 'p':
+                tree->print();
+                break;
+            case 'e':
+                cout << "Answer: " << tree->evaluate() << endl;
+                break;
+            case 'x':
+                cout << "Exiting" << endl;
+                break;
+            default:
+                cout << "Invalid operation" << endl;
+        }
+    } while (op != 'x');
+    return 0;
+}
+
+node* opInput(MyBinaryTree* tree, string prompt, node* parent) {
+    string input;
+    node* n = nullptr;
+    cout << "Enter " << prompt << ": ";
+    cin >> input;
+    switch (input[0]) {
+        // TODO add cases for operations and default case for numbers
+        case '+':
+        case '-':
+        case '/':
+        case '*':
+            n = tree->create_node(input, parent);
+            opInput(tree, "left of " + n->elem, n);
+            opInput(tree, "right of " + n->elem, n);
+            break;
+            
+        default:
+            n = tree->create_node(input, parent);
+            if(parent){
+                if(!parent->left){
+                    tree->addLeft(parent, input);
+                } else if (!parent->right){
+                    tree->addRight(parent, input);
+                }
+            }
+            break;
+    }
+    return n;
+    
+}

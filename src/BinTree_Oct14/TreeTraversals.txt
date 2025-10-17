@@ -1,0 +1,3 @@
+Preorder - visit, left, right VLR
+Postorder - left, right, visit LRV
+Inorder - left, visit, right  LVR  (exclusive to bin tree) 
