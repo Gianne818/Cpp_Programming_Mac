@@ -9,5 +9,6 @@ public:
     virtual void insertAt(int, int) = 0;
     virtual int removeAt(int) = 0;
     virtual int removeAll(int) = 0;
+    virtual void flip() = 0;
 
 };

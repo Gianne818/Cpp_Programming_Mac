@@ -1,0 +1,30 @@
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(!list1) return list2;
+        ListNode* tail = list1;
+        while(tail && tail->next){
+            tail = tail->next;
+        }
+
+        tail->next = list2;
+        sort(list1);
+
+        return list1;
+    }
+
+    void sort(ListNode* head){
+        ListNode* list = head;
+        while(list->next){
+            if(list->val > list->next->val){
+                int temp = list->next->val;
+                list->next->val = list->val;
+                list->val = temp;
+                list = head;
+
+            } 
+                list = list->next;
+        }
+    }
+    
+};

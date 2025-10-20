@@ -10,7 +10,7 @@ int main (){
     int pos;
     Node* temp = new Node();
     cout << "Options: " << endl << "a. Add\n" << "b. Print\n" << "c. Remove Head.\n" << "d. Remove Tail\n" << "e. Find num\n" << 
-    "f. insertAt\n" << "g. removeAt\n" << "h. removeAll\n" << "x. Exit\n";
+    "f. insertAt\n" << "g. removeAt\n" << "h. removeAll\n" << "i. flip\n" << "x. Exit\n";
     do {
         cout << "Enter option: ";
         cin >> op;
@@ -79,6 +79,9 @@ int main (){
                 cout << "Removed " << pos << " elements.\n";
                 break;
 
+            case 'i':
+                list->flip();
+                break;
             case 'x':
                 cout << "Exiting..." << endl;
                 break;

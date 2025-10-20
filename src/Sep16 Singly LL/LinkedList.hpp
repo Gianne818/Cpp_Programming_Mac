@@ -178,6 +178,27 @@ public:
 
     }
 
+    void flip(){
+        Node* curr = head;
+        Node* prev = nullptr;
+        Node* next = nullptr;
+        while(curr){
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+    }
+
+    /* example:  1 2 3 4 5
+    c = 1               c = 2                   c = 3                   c = 4                       c = 5
+    n = 2               n = 3                   n = 4                   n = 5                       n = nullptr    
+    cn = nullptr        cn = 1->nullptr         cn = 2->1->nullptr      cn = 3->2->1->nullptr       cn = 4->3->2->1->nullptr
+    p = 1->nullptr      p = 2->1->nullptr       p = 3->2->1->nullptr    p = 4->3->2->1->nullptr     p = 5->4->3->2->1    
+    c = 2               c = 3                   c = 4                   c = 5                       c = nullptr, end while, head = 5->4->3->2->1    
+    */
+
     int removeAll(int num){
         int pos = 1;
         int count = 0;
