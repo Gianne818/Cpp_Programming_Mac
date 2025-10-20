@@ -176,7 +176,6 @@ public:
 
 
     void print(){
-        head = tail->next;
         node* temp = head;
         if(size==0){
             cout << "Empty.\n";
