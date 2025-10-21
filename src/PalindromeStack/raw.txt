@@ -1,0 +1,74 @@
+bool isPalindrome(string s) {
+    ArrayList stack;
+
+    for(char c : s) stack.push(c);
+
+    for(char c : s){
+        if(c != stack.pop()) return false;
+    }
+
+    return true;
+}
+
+--------------------------------------------------------
+
+int checkPalindrome(int arr[], int n) {
+    ArrayList stack;
+    int pushPopCount = 0;
+
+    for(int i=0; i<n; i++) {
+        stack.push(arr[i]);
+        pushPopCount++;
+    }
+
+    for(int i=0; i<n; i++) {
+        int val = stack.pop();
+        pushPopCount++;
+        if(val != arr[i]) {
+            cout << "Mismatch at index " << i << ", total push/pop: " << pushPopCount << endl;
+            return i; // first mismatch
+        }
+    }
+    cout << "Palindrome! Total push/pop operations: " << pushPopCount << endl;
+    return -1; // perfect palindrome
+}
+
+int main() {
+    int arr[] = {1,2,3,2,1};
+    checkPalindrome(arr, 5);
+}
+
+------------------------------------------------
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include "arraystack.hpp" // ALREADY IMPLEMENTED
+using namespace std;
+
+int main() {
+	Stack* st = new ArrayStack();
+    string input;
+    int num;
+    do {
+    	cout << "Enter: ";
+    	cin >> input; 
+    	if(input=="x") break;
+    	if(isdigit(input[0])){
+    	    st->push(stoi(input));
+    	} else {
+    	    if(st->size() < 2) return st->top();
+    	    int b = st->top(); st->pop();
+    	    int a = st->top(); st->pop();
+	        switch(input[0]){
+    	        case '+': st->push(a+b); break;
+    	        case '-': st->push(a-b); break;
+    	        case '*': st->push(a*b); break;
+    	        case '/': st->push(a/b); break;
+    	    }
+    	}
+    } while (input != "x");
+	cout << "Answer is " << st->top();
+    return 0; 
+}
+
+---------------------------
