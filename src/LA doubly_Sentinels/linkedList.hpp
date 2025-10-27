@@ -30,6 +30,14 @@ class linkedList : public list{
         return val;
     }
 
+    // int removeNode(node* n){
+      
+        
+    //     size--;
+    //     return (n->prev->next = n->next, n->next->prev = n->prev, n->elem, delete n, n->elem);
+    // }
+
+    
 
     public:
 
@@ -80,13 +88,25 @@ class linkedList : public list{
     }
 
     int removeAt(int pos){
-        if(size==0) return -1;
-        node* temp = head.next;
-        int ctr = 1;
-        while(ctr<pos){
-            temp = temp->next;
-            ctr++;
+        node* temp = new node();
+        if(pos < 1 || pos > size || size == 0) return -1;
+        if(pos<size/2){
+            temp = head.next;
+            for (int i = 1; i < pos; i++){
+                temp = temp->next;
+                cout << "from head\n";
+            }
+            
+            
         }
+        else {
+            temp = tail.prev;
+            for (int i = size; i > pos; i--){
+                temp = temp->prev;
+                cout << "from tail\n";
+            }
+        }
+        
         return removeNode(temp);
     }
 

@@ -140,6 +140,19 @@ public:
         return count;
     }
 
+    void flip(){
+        node* curr = head;
+        node* prev = nullptr;
+        node* next = nullptr;
+        while(curr){
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+    }
+
     void print(){
         cout << endl;
         if(size==0){
