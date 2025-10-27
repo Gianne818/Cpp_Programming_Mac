@@ -14,6 +14,7 @@ public:
     virtual void  preOrder(node*) = 0;
     virtual void  inOrder(node*) = 0;
     virtual void  postOrder(node*) = 0;
+    virtual void breadthFirst() = 0;
     virtual node* findNode(int, node*) = 0;
 
     void print(){

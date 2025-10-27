@@ -1,4 +1,4 @@
-#include "GenTree.hpp"
+#include "nodeString.hpp"
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -16,7 +16,7 @@ using namespace std;
     virtual void  postOrder(node*) = 0;
 */
 
-class BinTree : public GenTree {
+class BinTree {
     node* root;
     int size;
 
@@ -27,15 +27,20 @@ public:
     }
 
 
-    node* findNode(int num, node* n){
+    void setRoot(node* n){
+        root = n;
+        size++;
+    }
+
+    node* findNode(string str, node* n){
         if(!n) return nullptr;
-        if(n && n->elem == num){
+        if(n && n->elem == str){
             return n;
         }
         
-        node* leftRes = findNode(num, n->left);
+        node* leftRes = findNode(str, n->left);
         if(leftRes) return leftRes;
-        return findNode(num, n->right);
+        return findNode(str, n->right);
     }
 
     node* left(node* n){
@@ -57,14 +62,14 @@ public:
         }
     }
 
-    node* addRoot(int num){
+    node* addRoot(string str){
         if(root){
             throw logic_error("Root already exists.\n");
         }
 
         node* n = new node();
         n->parent = nullptr;
-        n->elem = num;
+        n->elem = str;
         n->right = nullptr;
         n->left = nullptr;
         root = n;
@@ -72,20 +77,20 @@ public:
         return n;
     }
 
-    node* addLeft(node* p, int num){
+    node* addLeft(node* p, string str){
         if(!p){
             throw logic_error("Parent does not exist.\n");
         } else if(p->left){
             throw logic_error("Already has left child\n");
         } else {
-            node* temp = findNode(num, root);
-            if(temp && temp->elem==num){
+            node* temp = findNode(str, root);
+            if(temp && temp->elem==str){
                 throw logic_error("Value already exists.\n");
             }
         }
 
         node* n = new node();
-        n->elem = num;
+        n->elem = str;
         n->parent = p;
         n->left = nullptr;
         n->right = nullptr;
@@ -94,21 +99,21 @@ public:
         return n;
     }
 
-    node* addRight(node* p, int num){
+    node* addRight(node* p, string str){
         if(!p){
             throw logic_error("Parent does not exist.\n");
         } else if(p->right){
             throw logic_error("Already has right child\n");
         } else {
-            node* temp = findNode(num, root);
-            if(temp && temp->elem==num){
+            node* temp = findNode(str, root);
+            if(temp && temp->elem==str){
                 throw logic_error("Value already exists.\n");
             }
         }
         
         
         node* n = new node();
-        n->elem = num;
+        n->elem = str;
         n->parent = p;
         n->left = nullptr;
         n->right = nullptr;
@@ -162,8 +167,49 @@ public:
         }
     }
 
+    void print(){
+        cout << "Size: " << getSize() << endl;
+        if(getSize()==0){
+            cout << "Empty.\n";
+            return;
+        }
+        printNode("", getRoot(), false);
+    }
 
+    void printNode(string prefix, node* n, bool isLeft){
+        if(!n) return;
+        cout << prefix;
+        cout << (isLeft ? "+--L: " : "+--R: ");
+        cout << n->elem << endl;
 
+        printNode(prefix + "|   ", n->left, true);
+        printNode(prefix + "|   ", n->right, false);
+    }
+
+    int evaluate(){
+        if(!root) throw logic_error("No root.");
+        return evaluateHelper(root);
+    }
+
+    int evaluateHelper(node* n){
+        if(!n) return 0;
+        
+        if(!n->left && n->right){
+            return stoi(n->elem);
+        }
+
+        int leftVal = evaluateHelper(n->left);
+        int rightVal = evaluateHelper(n->right);
+        string op = n->elem;
+
+        if(op=="+") return leftVal + rightVal;
+        if(op=="-") return leftVal - rightVal;
+        if(op=="*") return leftVal * rightVal;
+        if(op=="/") return leftVal / rightVal;
+
+        throw logic_error("Invalid operator\n");
+
+    }
 
 // 12 10 14 9 11 13 15
 };

@@ -18,6 +18,7 @@ int main (){
     cout << "g. preOrder\n";
     cout << "h. inOrder\n";
     cout << "i. postOrder\n";
+    cout << "j. breadthFirst\n";
 
 
     do{
@@ -53,23 +54,19 @@ int main (){
                     cout << "Enter parent value to get direct left child: ";
                     cin >> num2;
                     parent = tree->findNode(num2, tree->getRoot());
-                    if(parent && parent->left){
-                        cout << "Left of " << parent->elem << ": " << tree->left(parent)->elem << endl;
-                    }
-                    else {
-                        throw new exception();
-                    }
+            
+                    cout << "Left of " << parent->elem << ": " << tree->left(parent)->elem << endl;
+                
+                    
                     break;
 
                 case 'e':
                     cout << "Enter parent value to get direct right child: ";
                     cin >> num2;
                     parent = tree->findNode(num2, tree->getRoot());
-                    if(parent && parent->left){
-                        cout << "Right of " << parent->elem << ": " << tree->right(parent)->elem << endl;
-                    } else {
-                        throw new exception();
-                    }
+                    
+                    cout << "Right of " << parent->elem << ": " << tree->right(parent)->elem << endl;
+                    
                     break;
         
                 case 'f':
@@ -79,21 +76,31 @@ int main (){
                 case 'g':
                     cout << "PREORDER: ";
                     tree->preOrder(tree->getRoot());
+                    cout << endl;
                     break;
 
                 case 'h':
                     cout << "INORDER: ";
                     tree->inOrder(tree->getRoot());
+                    cout << endl;
                     break;
 
                 case 'i':
                     cout << "POSTORDER: ";
                     tree->postOrder(tree->getRoot());
+                    cout << endl;
+                    break;
+
+                case 'j':
+                    cout << "BREADTHFIRST: ";
+                    tree->breadthFirst();
+                    cout << endl;
                     break;
                     
                 case 'x':
                     cout << "Exiting...\n";
                     break;
+            
                 default:
                     cout << "Invalid input.";
             }
