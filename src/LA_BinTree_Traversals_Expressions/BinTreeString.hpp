@@ -194,7 +194,7 @@ public:
     int evaluateHelper(node* n){
         if(!n) return 0;
         
-        if(!n->left && n->right){
+        if(!n->left && !n->right){
             return stoi(n->elem);
         }
 

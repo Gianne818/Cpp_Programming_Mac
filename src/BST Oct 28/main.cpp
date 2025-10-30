@@ -1,4 +1,4 @@
-#include "../BinaryTree.hpp"
+#include "BinaryTree.hpp"
 using namespace std;
 
 int main (){
@@ -10,16 +10,15 @@ int main (){
 
     cout << "CHOICES\n";
     cout << "a. addRoot\n";
-    cout << "b. addLeft\n";
-    cout << "c. addRight\n";
-    cout << "d. getLeft\n";
-    cout << "e. getRight\n";
-    cout << "f. print\n";
-    cout << "g. preOrder\n";
-    cout << "h. inOrder\n";
-    cout << "i. postOrder\n";
-    cout << "j. breadthFirst\n";
-    cout << "k. remove node only\n";
+    cout << "b. insert\n";
+    cout << "c. getLeft\n";
+    cout << "d. getRight\n";
+    cout << "e. print\n";
+    cout << "f. preOrder\n";
+    cout << "g. inOrder\n";
+    cout << "h. postOrder\n";
+    cout << "i. breadthFirst\n";
+    cout << "j. remove node only\n";
 
 
     do{
@@ -34,24 +33,12 @@ int main (){
                     break;
 
                 case 'b':
-                    cout << "Enter parent value: ";
-                    cin >> num2;
-                    parent = tree->findNode(num2, tree->getRoot());
-                    cout << "Enter value to add to left: ";
+                    cout << "Enter value to insert: ";
                     cin >> num;
-                    tree->addLeft(parent, num);
+                    tree->insert(num, tree->getRoot());
                     break;
 
                 case 'c':
-                    cout << "Enter parent value: ";
-                    cin >> num2;
-                    parent = tree->findNode(num2, tree->getRoot());
-                    cout << "Enter value to add to right: ";
-                    cin >> num;
-                    tree->addRight(parent, num);
-                    break;
-
-                case 'd':
                     cout << "Enter parent value to get direct left child: ";
                     cin >> num2;
                     parent = tree->findNode(num2, tree->getRoot());
@@ -61,7 +48,7 @@ int main (){
                     
                     break;
 
-                case 'e':
+                case 'd':
                     cout << "Enter parent value to get direct right child: ";
                     cin >> num2;
                     parent = tree->findNode(num2, tree->getRoot());
@@ -70,38 +57,38 @@ int main (){
                     
                     break;
         
-                case 'f':
+                case 'e':
                     tree->print();
                     break;
 
-                case 'g':
+                case 'f':
                     cout << "PREORDER: ";
                     tree->preOrder(tree->getRoot());
                     cout << endl;
                     break;
 
-                case 'h':
+                case 'g':
                     cout << "INORDER: ";
                     tree->inOrder(tree->getRoot());
                     cout << endl;
                     break;
 
-                case 'i':
+                case 'h':
                     cout << "POSTORDER: ";
                     tree->postOrder(tree->getRoot());
                     cout << endl;
                     break;
 
-                case 'j':
+                case 'i':
                     cout << "BREADTHFIRST: ";
                     tree->breadthFirst();
                     cout << endl;
                     break;
                 
-                case 'k':
+                case 'j':
                     cout << "Enter value of node to remove: ";
                     cin >> num;
-                    cout << "Removed: " << tree->removeNodeOnly(num) << endl;
+                    cout << "Removed: " << tree->removeNodeOnly(num);
                     break;
                     
                 case 'x':
@@ -113,7 +100,7 @@ int main (){
             }
         } catch (exception& e){
            cout << e.what();
-        } 
+        }
         
     } while(op!='x');
 }

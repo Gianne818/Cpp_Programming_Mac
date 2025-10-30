@@ -20,6 +20,14 @@ class BinTree : public GenTree {
     node* root;
     int size;
 
+    node* create_node(int num, node* parent){
+        node* n = new node();
+        n->elem = num;
+        n->parent = parent;
+        size++;
+        return n;
+    }
+
 public:
     BinTree(){
         root = nullptr;
@@ -37,6 +45,8 @@ public:
         if(leftRes) return leftRes;
         return findNode(num, n->right);
     }
+
+    
 
     node* left(node* n){
         if(!n){
@@ -72,49 +82,14 @@ public:
         return n;
     }
 
-    node* addLeft(node* p, int num){
-        if(!p){
-            throw logic_error("Parent does not exist.\n");
-        } else if(p->left){
-            throw logic_error("Already has left child\n");
-        } else {
-            node* temp = findNode(num, root);
-            if(temp && temp->elem==num){
-                throw logic_error("Value already exists.\n");
-            }
+    node* insert(int num, node* root){
+        if(root == nullptr) return create_node(num, root);
+        if(num < root->elem){
+            root->left = insert(num, root->left); 
+        } else if (num > root->elem){
+            root->right = insert(num, root->right);
         }
-
-        node* n = new node();
-        n->elem = num;
-        n->parent = p;
-        n->left = nullptr;
-        n->right = nullptr;
-        p->left = n;
-        size++;
-        return n;
-    }
-
-    node* addRight(node* p, int num){
-        if(!p){
-            throw logic_error("Parent does not exist.\n");
-        } else if(p->right){
-            throw logic_error("Already has right child\n");
-        } else {
-            node* temp = findNode(num, root);
-            if(temp && temp->elem==num){
-                throw logic_error("Value already exists.\n");
-            }
-        }
-        
-        
-        node* n = new node();
-        n->elem = num;
-        n->parent = p;
-        n->left = nullptr;
-        n->right = nullptr;
-        p->right = n;
-        size++;
-        return n;
+        return root;
     }
 
     node* getRoot(){

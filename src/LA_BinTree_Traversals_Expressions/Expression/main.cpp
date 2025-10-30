@@ -31,7 +31,7 @@ int main(void) {
             }
         } while (op != 'x');
     } catch (exception& e){
-        e.what();
+        cout << e.what() << endl;
     }
     
     return 0;
