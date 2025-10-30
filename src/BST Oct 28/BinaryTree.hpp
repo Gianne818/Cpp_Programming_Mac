@@ -70,14 +70,22 @@ public:
         return n;
     }
 
-    node* insert(int num, node* root){
-        if(root == nullptr) return create_node(num, root);
-        if(num < root->elem){
-            root->left = insert(num, root->left); 
-        } else if (num > root->elem){
-            root->right = insert(num, root->right);
+    node* insert(int num, node* n){
+        //if root does not exist, create root and return it.
+        if(!root){
+            root = create_node(num, nullptr);
+            return root;
         }
-        return root;
+
+        if(num < n->elem){
+            //while n->left still exists, proceed to the left. if it doesnt, create node with n as parent
+            n->left ? insert(num, n->left) : n->left = create_node(num, n);
+        } 
+        else if (num > n->elem){
+            //while n->right still exists, proceed to the right. if it doesnt, create node with n as parent
+            n->right ? insert(num, n->right) : n->right = create_node(num, n);
+        }
+        return n;
     }
 
     node* getRoot(){
@@ -127,6 +135,9 @@ public:
 
     int removeNodeOnly(int num){
         node* n = findNode(num, root);
+        if(!n){
+            throw logic_error("Node not found.\n");
+        }
         if(n->right && n->left){
             throw logic_error("Cannot remove " + to_string(n->elem) + " as it has 2 children\n");
         }
@@ -181,14 +192,14 @@ public:
         }
 
         //if n has no children
-        else {
+        else if (!n->left && !n->right){
             //if n is right child of its parent
             if(n == n->parent->right){
                 n->parent->right = nullptr;
             } else {
                 n->parent->left = nullptr;
             }
-        }
+        } 
 
         size--;
         free(n);

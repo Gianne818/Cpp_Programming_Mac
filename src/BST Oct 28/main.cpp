@@ -7,18 +7,20 @@ int main (){
     int num;
     int num2;
     node* parent;
+    node* temp;
 
     cout << "CHOICES\n";
-    cout << "a. addRoot\n";
-    cout << "b. insert\n";
-    cout << "c. getLeft\n";
-    cout << "d. getRight\n";
-    cout << "e. print\n";
-    cout << "f. preOrder\n";
-    cout << "g. inOrder\n";
-    cout << "h. postOrder\n";
-    cout << "i. breadthFirst\n";
-    cout << "j. remove node only\n";
+    cout << "a. insert\n";
+    cout << "b. getLeft\n";
+    cout << "c. getRight\n";
+    cout << "d. print\n";
+    cout << "e. preOrder\n";
+    cout << "f. inOrder\n";
+    cout << "g. postOrder\n";
+    cout << "h. breadthFirst\n";
+    cout << "i. remove node only\n";
+    cout << "j. node height\n";
+    cout << "k. node depth\n";
 
 
     do{
@@ -27,28 +29,19 @@ int main (){
             cin >> op;
             switch(op){
                 case 'a':
-                    cout << "Enter value to add: ";
-                    cin >> num;
-                    tree->addRoot(num);
-                    break;
-
-                case 'b':
                     cout << "Enter value to insert: ";
                     cin >> num;
                     tree->insert(num, tree->getRoot());
                     break;
 
-                case 'c':
+                case 'b':
                     cout << "Enter parent value to get direct left child: ";
                     cin >> num2;
                     parent = tree->findNode(num2, tree->getRoot());
-            
-                    cout << "Left of " << parent->elem << ": " << tree->left(parent)->elem << endl;
-                
-                    
+                    cout << "Left of " << parent->elem << ": " << tree->left(parent)->elem << endl; 
                     break;
 
-                case 'd':
+                case 'c':
                     cout << "Enter parent value to get direct right child: ";
                     cin >> num2;
                     parent = tree->findNode(num2, tree->getRoot());
@@ -57,38 +50,58 @@ int main (){
                     
                     break;
         
-                case 'e':
+                case 'd':
                     tree->print();
                     break;
 
-                case 'f':
+                case 'e':
                     cout << "PREORDER: ";
                     tree->preOrder(tree->getRoot());
                     cout << endl;
                     break;
 
-                case 'g':
+                case 'f':
                     cout << "INORDER: ";
                     tree->inOrder(tree->getRoot());
                     cout << endl;
                     break;
 
-                case 'h':
+                case 'g':
                     cout << "POSTORDER: ";
                     tree->postOrder(tree->getRoot());
                     cout << endl;
                     break;
 
-                case 'i':
+                case 'h':
                     cout << "BREADTHFIRST: ";
                     tree->breadthFirst();
                     cout << endl;
                     break;
                 
-                case 'j':
+                case 'i':
                     cout << "Enter value of node to remove: ";
                     cin >> num;
                     cout << "Removed: " << tree->removeNodeOnly(num);
+                    break;
+
+                case 'j':
+                    cout << "Enter node to get height: ";
+                    cin >> num;
+                    temp = tree->findNode(num, tree->getRoot());
+                    if(!temp){
+                        throw logic_error("Node does not exist\n");
+                    }
+                    cout << "Node height: " << temp->getHeight() << endl;
+                    break;
+                    
+                case 'k':
+                    cout << "Enter node to get depth: ";
+                    cin >> num;
+                    temp = tree->findNode(num, tree->getRoot());
+                    if(!temp){
+                        throw logic_error("Node does not exist\n");
+                    }
+                    cout << "Node depth: " << temp->getDepth() << endl;
                     break;
                     
                 case 'x':
