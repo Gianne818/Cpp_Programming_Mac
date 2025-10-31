@@ -164,6 +164,9 @@ public:
 
     int removeNodeOnly(int num){
         node* n = findNode(num, root);
+        if(!n){
+            throw logic_error("Node not found.\n");
+        }
         if(n->right && n->left){
             throw logic_error("Cannot remove " + to_string(n->elem) + " as it has 2 children\n");
         }
@@ -172,34 +175,22 @@ public:
 
         //check if n is root
         if(n==root){
+            if(!n->right && !n->left){
+                root = nullptr;
+            }
+
             //if root has right child
-            if(n->right){
-                //if n is root's left child
-                if(n == n->parent->right){
-                    n->parent->right = n->right;
-                } else {
-                    n->parent->left = n->right;
-                }
-                n->right->parent = n->parent;
-                root = n->left;
+            else if(n->right){
+                root = n->right;
+                root->parent = nullptr;
             }
 
             //if root has left child
             else if(n->left){
-                //if n is root's right child
-                if(n == n->parent->right){
-                    n->parent->right = n->left;
-                } else {
-                    n->parent->left = n->left;
-                }
-                n->left->parent = n->parent;
                 root = n->left;
+                root->parent = nullptr;
             }
 
-            //its just root alone
-            else {
-                root = nullptr;
-            }
             size--;
             free(n);
             return val;
@@ -208,13 +199,17 @@ public:
         //if node has right child
         else if(n->right){
             n->right->parent = n->parent;
-            n->parent->right = n->right;
+            if(n == n->parent->right){
+                n->parent->right = n->right;
+            } else n->parent->left = n->right;
         }
 
         //if node has left child
         else if(n->left){
             n->left->parent = n->parent;
-            n->parent->left = n->left;
+            if(n == n->parent->left){
+                n->parent->left = n->left;
+            } else n->parent->right= n->left;
         }
 
         //if n has no children
@@ -225,7 +220,7 @@ public:
             } else {
                 n->parent->left = nullptr;
             }
-        }
+        } 
 
         size--;
         free(n);

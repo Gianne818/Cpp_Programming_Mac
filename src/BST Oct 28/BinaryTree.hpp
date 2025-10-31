@@ -23,17 +23,27 @@ public:
     }
 
 
+    // node* findNode(int num, node* n){
+    //     if(!n) return nullptr;
+    //     if(n && n->elem == num){
+    //         return n;
+    //     }
+        
+    //     node* leftRes = findNode(num, n->left);
+    //     if(leftRes) return leftRes;
+    //     return findNode(num, n->right);
+    // }
+
     node* findNode(int num, node* n){
         if(!n) return nullptr;
+
         if(n && n->elem == num){
             return n;
         }
-        
-        node* leftRes = findNode(num, n->left);
-        if(leftRes) return leftRes;
-        return findNode(num, n->right);
+        return (num < n->elem) ? findNode(num, n->left) : findNode(num, n->right);
     }
 
+    
     
 
     node* left(node* n){
@@ -146,34 +156,22 @@ public:
 
         //check if n is root
         if(n==root){
+            if(!n->right && !n->left){
+                root = nullptr;
+            }
+
             //if root has right child
-            if(n->right){
-                //if n is root's left child
-                if(n == n->parent->right){
-                    n->parent->right = n->right;
-                } else {
-                    n->parent->left = n->right;
-                }
-                n->right->parent = n->parent;
-                root = n->left;
+            else if(n->right){
+                root = n->right;
+                root->parent = nullptr;
             }
 
             //if root has left child
             else if(n->left){
-                //if n is root's right child
-                if(n == n->parent->right){
-                    n->parent->right = n->left;
-                } else {
-                    n->parent->left = n->left;
-                }
-                n->left->parent = n->parent;
                 root = n->left;
+                root->parent = nullptr;
             }
 
-            //its just root alone
-            else {
-                root = nullptr;
-            }
             size--;
             free(n);
             return val;
@@ -182,17 +180,21 @@ public:
         //if node has right child
         else if(n->right){
             n->right->parent = n->parent;
-            n->parent->right = n->right;
+            if(n == n->parent->right){
+                n->parent->right = n->right;
+            } else n->parent->left = n->right;
         }
 
         //if node has left child
         else if(n->left){
             n->left->parent = n->parent;
-            n->parent->left = n->left;
+            if(n == n->parent->left){
+                n->parent->left = n->left;
+            } else n->parent->right= n->left;
         }
 
         //if n has no children
-        else if (!n->left && !n->right){
+        else {
             //if n is right child of its parent
             if(n == n->parent->right){
                 n->parent->right = nullptr;
