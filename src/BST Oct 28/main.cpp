@@ -81,7 +81,7 @@ int main (){
                 case 'i':
                     cout << "Enter value of node to remove: ";
                     cin >> num;
-                    cout << "Removed: " << tree->removeNodeOnly(num) << endl;
+                    cout << "Removed: " << tree->remove(num) << endl;
                     break;
 
                 case 'j':

@@ -143,70 +143,143 @@ public:
         }
     }
 
-    int removeNodeOnly(int num){
+    int remove(int num){
         node* n = findNode(num, root);
-        if(!n){
-            throw logic_error("Node not found.\n");
-        }
-        if(n->right && n->left){
-            throw logic_error("Cannot remove " + to_string(n->elem) + " as it has 2 children\n");
-        }
+        if(!n) throw logic_error("Node not found.\n");
 
         int val = n->elem;
 
-        //check if n is root
-        if(n==root){
+        if(n == root){
+            cout << "Triggered condition for root\n";
+            //if no child
             if(!n->right && !n->left){
                 root = nullptr;
             }
-
-            //if root has right child
-            else if(n->right){
-                root = n->right;
-                root->parent = nullptr;
-            }
-
-            //if root has left child
-            else if(n->left){
+            
+            //if one child
+            else if(n->left && !n->right){
+                cout << "Triggered n->left\n";
                 root = n->left;
-                root->parent = nullptr;
+            }
+            else if (n->right && !n->left){
+                cout << "Triggered n->right\n";
+                root = n->right;
             }
 
+            //if two children
+            else {
+                cout << "Triggered else block\n";
+                node* temp = n->right;
+                while(temp->left){
+                    temp = temp->left;
+                }
+                root->elem = temp->elem;
+                if(temp->right) 
+                    temp->right->parent = temp->parent; //leftmost child has right child
+                if(temp == temp->parent->right) 
+                    temp->parent->right = temp->right; //if temp is a right child (it is the leftmost yet is the parent's right)
+                else 
+                    temp->parent->left = temp->right;
+                delete(temp);
+                size--;
+                return val;
+            }
             size--;
-            free(n);
             return val;
-        }
-        
-        //if node has right child
-        else if(n->right){
-            n->right->parent = n->parent;
-            if(n == n->parent->right){
-                n->parent->right = n->right;
-            } else n->parent->left = n->right;
+         }
+
+         //if no child
+        if(!n->right && !n->left){
+            if(n == n->parent->left) n->parent->left = nullptr;
+            else n->parent->right = nullptr;
         }
 
-        //if node has left child
-        else if(n->left){
-            n->left->parent = n->parent;
-            if(n == n->parent->left){
-                n->parent->left = n->left;
-            } else n->parent->right= n->left;
-        }
-
-        //if n has no children
         else {
-            //if n is right child of its parent
-            if(n == n->parent->right){
-                n->parent->right = nullptr;
-            } else {
-                n->parent->left = nullptr;
-            }
-        } 
-
+            cout << "Triggered else block\n";
+                node* temp = n->right;
+                while(temp->left){
+                    temp = temp->left;
+                }
+                n->elem = temp->elem;
+                if(temp->right) 
+                    temp->right->parent = temp->parent; //leftmost child has right child
+                if(temp == temp->parent->right) 
+                    temp->parent->right = temp->right; //if temp is a right child (it is the leftmost yet is the parent's right)
+                else 
+                    temp->parent->left = temp->right;
+                delete(temp);
+                size--;
+                return val;
+        }
+        delete n;
         size--;
-        free(n);
         return val;
     }
+
+    // int removeNodeOnly(int num){
+    //     node* n = findNode(num, root);
+    //     if(!n){
+    //         throw logic_error("Node not found.\n");
+    //     }
+    //     if(n->right && n->left){
+    //         throw logic_error("Cannot remove " + to_string(n->elem) + " as it has 2 children\n");
+    //     }
+
+    //     int val = n->elem;
+
+    //     //check if n is root
+    //     if(n==root){
+    //         if(!n->right && !n->left){
+    //             root = nullptr;
+    //         }
+
+    //         //if root has right child
+    //         else if(n->right){
+    //             root = n->right;
+    //             root->parent = nullptr;
+    //         }
+
+    //         //if root has left child
+    //         else if(n->left){
+    //             root = n->left;
+    //             root->parent = nullptr;
+    //         }
+
+    //         size--;
+    //         free(n);
+    //         return val;
+    //     }
+        
+    //     //if node has right child
+    //     else if(n->right){
+    //         n->right->parent = n->parent;
+    //         if(n == n->parent->right){
+    //             n->parent->right = n->right;
+    //         } else n->parent->left = n->right;
+    //     }
+
+    //     //if node has left child
+    //     else if(n->left){
+    //         n->left->parent = n->parent;
+    //         if(n == n->parent->left){
+    //             n->parent->left = n->left;
+    //         } else n->parent->right= n->left;
+    //     }
+
+    //     //if n has no children
+    //     else {
+    //         //if n is right child of its parent
+    //         if(n == n->parent->right){
+    //             n->parent->right = nullptr;
+    //         } else {
+    //             n->parent->left = nullptr;
+    //         }
+    //     } 
+
+    //     size--;
+    //     free(n);
+    //     return val;
+    // }
 
     int removeNodeAndSubtree(int num){
         return -1;

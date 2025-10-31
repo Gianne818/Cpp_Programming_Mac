@@ -15,7 +15,8 @@ public:
     virtual void  postOrder(node*) = 0;
     virtual void breadthFirst() = 0;
     virtual node* findNode(int, node*) = 0;
-    virtual int removeNodeOnly(int num) = 0;
+   // virtual int removeNodeOnly(int num) = 0;
+    virtual int remove(int num) = 0;
 
     void print(){
         cout << "Size: " << getSize() << endl;
