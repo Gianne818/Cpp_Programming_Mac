@@ -68,8 +68,6 @@ bool validate(int s, int* arr){
 }
 
 
-
-
 int main (){
     int s;
     cout << "Enter number of elements: ";
