@@ -23,17 +23,6 @@ public:
     }
 
 
-    // node* findNode(int num, node* n){
-    //     if(!n) return nullptr;
-    //     if(n && n->elem == num){
-    //         return n;
-    //     }
-        
-    //     node* leftRes = findNode(num, n->left);
-    //     if(leftRes) return leftRes;
-    //     return findNode(num, n->right);
-    // }
-
     node* findNode(int num, node* n){
         if(!n) return nullptr;
 
@@ -160,10 +149,12 @@ public:
             else if(n->left && !n->right){
                 cout << "Triggered n->left\n";
                 root = n->left;
+                root->parent = nullptr;
             }
             else if (n->right && !n->left){
                 cout << "Triggered n->right\n";
                 root = n->right;
+                root->parent = nullptr;
             }
 
             //if two children
@@ -192,6 +183,18 @@ public:
         if(!n->right && !n->left){
             if(n == n->parent->left) n->parent->left = nullptr;
             else n->parent->right = nullptr;
+        }
+
+        //if one child
+        else if(!n->right && n->left){
+            if(n == n->parent->left) n->parent->left = n->left;
+            else n->parent->right = n->left;
+            n->left->parent = n->parent;
+        } 
+        else if (!n->left && n->right){
+            if(n == n->parent->left) n->parent->left = n->right;
+            else n->parent->right = n->right;
+            n->right->parent = n->parent;
         }
 
         else {
