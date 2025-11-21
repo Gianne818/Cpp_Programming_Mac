@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 using namespace std;
 
 class MinHeap {
@@ -7,33 +8,27 @@ class MinHeap {
     int capacity;   // allocated size
     int size;       // number of elements
 
-    void swapElem(int& a, int& b){
-        int t = a;
-        a = b;
-        b = t;
-    }
-
     void resizeUp(){
         int newCap = ceil(capacity * 1.5);
         arr = (int*) realloc(arr, newCap * sizeof(int));
         capacity = newCap;
     }
 
+
     void resizeDown(){
-        int newCap = capacity / 2;
-        if(newCap < 10) return;
+        int newCap = capacity * 0.75;
         arr = (int*) realloc(arr, newCap * sizeof(int));
         capacity = newCap;
     }
 
-    void heapifyUp(int idx){
-        while(idx > 0){
-            int parent = (idx - 1) / 2;
-            if(arr[idx] >= arr[parent]) break;     // MIN-heap condition
-            swapElem(arr[idx], arr[parent]);
-            idx = parent;
-        }
-    }
+    // void heapifyUp(int idx){
+    //     while(idx > 0){
+    //         int parent = (idx - 1) / 2;
+    //         if(arr[idx] >= arr[parent]) break;     // MIN-heap condition
+    //         swap(arr[idx], arr[parent]);
+    //         idx = parent;
+    //     }
+    // }
 
     void heapifyDown(int idx){
         while(true){
@@ -46,9 +41,15 @@ class MinHeap {
 
             if(smallest == idx) break;
 
-            swapElem(arr[idx], arr[smallest]);
+            swap(arr[idx], arr[smallest]);
             idx = smallest;
         }
+    }
+
+
+    int parent(int num){
+        return (num-1)/2;
+
     }
 
 public:
@@ -61,11 +62,19 @@ public:
 
     void insert(int num){
         if(size == capacity) resizeUp();
+        arr[size++] = num;
+        int i = size-1;
 
-        arr[size] = num;
-        heapifyUp(size);
-        size++;
+        int parent = (i-1)/2;
+        while(i  != 0 && arr[parent] > arr[i]){
+            swap(arr[i], arr[parent]);
+            parent = (i-1)/2;
+            i = parent;
+        }
+
+    
     }
+
 
     void removeRoot(){  // removeMin
         if(size == 0) return;
@@ -79,7 +88,7 @@ public:
 
         heapifyDown(0);
 
-        if(size <= capacity / 4) resizeDown();
+        if(size <= floor(capacity/2.0)) resizeDown();
     }
 
     void print(){

@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(void) {
-	Heap* heap = new Heap();
+	MinHeap* heap = new MinHeap();
 	char op;
 	int input, ind;
 	do {
@@ -18,10 +18,9 @@ int main(void) {
 				cin >> input;
 				heap->insert(input);
 				break;
-			// case 'r':
-			// 	cin >> input;
-			// 	heap->remove(input);
-			// 	break;
+			case 'r':
+				heap->removeRoot();
+				break;
 			case 'p':
 				heap->print();
 				break;
