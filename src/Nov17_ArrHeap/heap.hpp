@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-class MinHeap {
+class Heap {
     int* arr;       // dynamic array
     int capacity;   // allocated size
     int size;       // number of elements
@@ -11,13 +11,15 @@ class MinHeap {
     void resizeUp(){
         int newCap = ceil(capacity * 1.5);
         arr = (int*) realloc(arr, newCap * sizeof(int));
+        cout << "Triggered resizeUp: " << newCap <<  endl;
         capacity = newCap;
     }
 
 
     void resizeDown(){
-        int newCap = capacity * 0.75;
+        int newCap = floor(capacity * 0.75);
         arr = (int*) realloc(arr, newCap * sizeof(int));
+        cout << "Triggered resizeDown: " << newCap <<  endl;
         capacity = newCap;
     }
 
@@ -47,14 +49,11 @@ class MinHeap {
     }
 
 
-    int parent(int num){
-        return (num-1)/2;
 
-    }
 
 public:
 
-    MinHeap(){
+    Heap(){
         capacity = 10;
         size = 0;
         arr = (int*) malloc(capacity * sizeof(int));
@@ -66,34 +65,39 @@ public:
         int i = size-1;
 
         int parent = (i-1)/2;
-        while(i  != 0 && arr[parent] > arr[i]){
-            swap(arr[i], arr[parent]);
-            parent = (i-1)/2;
+        while(i > 0 && arr[parent] > arr[i]){
+            swap(arr[i], arr[parent]); 
             i = parent;
+            parent = (i-1)/2;
         }
-
-    
     }
 
 
-    void removeRoot(){  // removeMin
+    void removeMin(){  // removeMin
         if(size == 0) return;
+/*
         if(size == 1){
             size = 0;
             return;
         }
+*/
 
         arr[0] = arr[size - 1];
         size--;
-
         heapifyDown(0);
 
         if(size <= floor(capacity/2.0)) resizeDown();
     }
 
     void print(){
-        for(int i = 0; i < size; i++){
+        int i = 0;
+        for(i = 0; i < size; i++){
             cout << arr[i] << " ";
+        }
+
+
+        for(i; i<capacity; i++){
+            cout << "0 ";
         }
         cout << endl;
     }
