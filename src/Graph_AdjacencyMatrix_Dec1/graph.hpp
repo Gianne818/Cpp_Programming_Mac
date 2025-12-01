@@ -1,21 +1,20 @@
-#include "vertex.hpp"
-#include "edge.hpp"
-
 class Graph {
 public:
     virtual int numVertices() = 0;
-    virtual Vertex* vertices() = 0;
+    virtual char* vertices() = 0;            // array of vertex labels (chars). Caller must not assume null-termination.
     virtual int numEdges() = 0;
-    virtual Edge* edges() = 0;
-    virtual Edge getEdge(Vertex u, Vertex v) = 0;
-    virtual Vertex* endVertices(Edge e) = 0;
-    virtual Vertex getOpposite(Vertex v, Edge e) = 0;
-    virtual int outDegree(Vertex v) = 0;
-    virtual Edge* outgoingEdges(Vertex v) = 0;
-    virtual int inDegree(Vertex v) = 0;
-    virtual Edge* incomingEdges(Vertex v) = 0;
-    virtual Vertex insertVertex(string x) = 0;
-    virtual Edge insertEdge(Vertex u, Vertex v, char x) = 0;
-    virtual void removeVertex(Vertex v) = 0;
-    virtual void removeEdge(Edge e) = 0;
+    virtual int* edges() = 0;                // array of edge labels (ints). Caller deletes returned array.
+    virtual int getEdge(char u, char v) = 0; // returns edge label or -1 if none
+    virtual char* endVertices(int e) = 0;    // returns two-char array (caller deletes) or nullptr
+    virtual char getOpposite(char v, int e) = 0;
+    virtual int outDegree(char v) = 0;
+    virtual int* outgoingEdges(char v) = 0;  // caller deletes returned array
+    virtual int inDegree(char v) = 0;
+    virtual int* incomingEdges(char v) = 0;  // caller deletes returned array
+    virtual char insertVertex(char x) = 0;   // insert vertex label
+    virtual int insertEdge(char u, char v, int x) = 0; // insert edge with int label
+    virtual void removeVertex(char v) = 0;
+    virtual void removeEdge(int e) = 0;
+    virtual void print() = 0;                // print graph representation
 };
+

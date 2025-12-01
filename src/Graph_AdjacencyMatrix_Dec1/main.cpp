@@ -1,34 +1,28 @@
 #include <iostream>
-#include <string>
 #include "adjacencyMatrix.hpp"
 using namespace std;
 
 int main() {
-    Graph* graph = new AdjacencyMatrix();
+    Graph* graph = new GraphMatrix();
     char op;
     do {
         cout << "Op: ";
         cin >> op;
         switch(op) {
             case 'v': {
-                string name;
+                char name;
                 cin >> name;
-                Vertex u = graph->insertVertex(name);
-                cout << "Inserted vertex " << u.data << endl;
+                char u = graph->insertVertex(name);
+                cout << "Inserted vertex " << u << endl;
                 break;
             }
             case 'e': {
-                string uName, vName;
-                char label;
+                char uName, vName;
+                int label;
                 cin >> uName >> vName >> label;
-                Vertex* vertices = graph->vertices();
-                Vertex u, v;
-                for(int i=0;i<graph->numVertices();i++){
-                    if(vertices[i].data==uName) u=vertices[i];
-                    if(vertices[i].data==vName) v=vertices[i];
-                }
-                Edge edge = graph->insertEdge(u,v,label);
-                cout << "Inserted edge " << edge.data << " from " << u.data << " to " << v.data << endl;
+                int edge = graph->insertEdge(uName, vName, label);
+                if (edge == -1) cout << "Failed to insert edge (missing vertex)" << endl;
+                else cout << "Inserted edge " << edge << " from " << uName << " to " << vName << endl;
                 break;
             }
             case 'n':
@@ -40,7 +34,7 @@ int main() {
             case 'p': {
                 cout << "(";
                 for(int i=0;i<graph->numVertices();i++){
-                    cout << graph->vertices()[i].data;
+                    cout << graph->vertices()[i];
                     if(i != graph->numVertices()-1) cout << ", ";
                 }
                 cout << ")" << endl;
@@ -48,10 +42,10 @@ int main() {
             }
             case 'q': {
                 int m = graph->numEdges();
-                Edge* allEdges = graph->edges();
+                int* allEdges = graph->edges();
                 cout << "(";
                 for(int i=0;i<m;i++){
-                    cout << allEdges[i].data;
+                    cout << allEdges[i];
                     if(i != m-1) cout << ", ";
                 }
                 cout << ")" << endl;
@@ -59,74 +53,52 @@ int main() {
                 break;
             }
             case 'g': {
-                string uName, vName;
+                char uName, vName;
                 cin >> uName >> vName;
-                Vertex* vertices = graph->vertices();
-                Vertex u, v;
-                for(int i=0;i<graph->numVertices();i++){
-                    if(vertices[i].data==uName) u=vertices[i];
-                    if(vertices[i].data==vName) v=vertices[i];
-                }
-                Edge e = graph->getEdge(u,v);
-                cout << "Edge between " << u.data << " and " << v.data << ": " << e.data << endl;
+                int e = graph->getEdge(uName, vName);
+                if (e == -1) cout << "No edge between " << uName << " and " << vName << endl;
+                else cout << "Edge between " << uName << " and " << vName << ": " << e << endl;
                 break;
             }
             case 'f': {
-                char label;
+                int label;
                 cin >> label;
-                Edge e{label};
-                Vertex* ends = graph->endVertices(e);
+                char* ends = graph->endVertices(label);
                 if(ends){
-                    cout << "Edge " << label << " connects (" << ends[0].data << ", " << ends[1].data << ")" << endl;
+                    cout << "Edge " << label << " connects (" << ends[0] << ", " << ends[1] << ")" << endl;
                     delete[] ends;
                 } else cout << "Edge not found" << endl;
                 break;
             }
             case 't': {
-                string vName;
-                char label;
+                char vName;
+                int label;
                 cin >> vName >> label;
-                Vertex* vertices = graph->vertices();
-                Vertex v;
-                for(int i=0;i<graph->numVertices();i++)
-                    if(vertices[i].data==vName) v=vertices[i];
-                Edge e{label};
-                Vertex opp = graph->getOpposite(v,e);
-                cout << "Opposite of " << v.data << " on edge " << label << ": " << opp.data << endl;
+                char opp = graph->getOpposite(vName, label);
+                if (opp == '\0') cout << "No opposite found" << endl;
+                else cout << "Opposite of " << vName << " on edge " << label << ": " << opp << endl;
                 break;
             }
             case 'o': {
-                string name;
+                char name;
                 cin >> name;
-                Vertex* vertices = graph->vertices();
-                Vertex v;
-                for(int i=0;i<graph->numVertices();i++)
-                    if(vertices[i].data==name) v=vertices[i];
-                cout << "Out degree of " << v.data << ": " << graph->outDegree(v) << endl;
+                cout << "Out degree of " << name << ": " << graph->outDegree(name) << endl;
                 break;
             }
             case 'i': {
-                string name;
+                char name;
                 cin >> name;
-                Vertex* vertices = graph->vertices();
-                Vertex v;
-                for(int i=0;i<graph->numVertices();i++)
-                    if(vertices[i].data==name) v=vertices[i];
-                cout << "In degree of " << v.data << ": " << graph->inDegree(v) << endl;
+                cout << "In degree of " << name << ": " << graph->inDegree(name) << endl;
                 break;
             }
             case 'O': {
-                string name;
+                char name;
                 cin >> name;
-                Vertex* vertices = graph->vertices();
-                Vertex v;
-                for(int i=0;i<graph->numVertices();i++)
-                    if(vertices[i].data==name) v=vertices[i];
-                int deg = graph->outDegree(v);
-                Edge* edges = graph->outgoingEdges(v);
+                int deg = graph->outDegree(name);
+                int* edges = graph->outgoingEdges(name);
                 cout << "(";
                 for(int i=0;i<deg;i++){
-                    cout << edges[i].data;
+                    cout << edges[i];
                     if(i != deg-1) cout << ", ";
                 }
                 cout << ")" << endl;
@@ -134,17 +106,13 @@ int main() {
                 break;
             }
             case 'I': {
-                string name;
+                char name;
                 cin >> name;
-                Vertex* vertices = graph->vertices();
-                Vertex v;
-                for(int i=0;i<graph->numVertices();i++)
-                    if(vertices[i].data==name) v=vertices[i];
-                int deg = graph->inDegree(v);
-                Edge* edges = graph->incomingEdges(v);
+                int deg = graph->inDegree(name);
+                int* edges = graph->incomingEdges(name);
                 cout << "(";
                 for(int i=0;i<deg;i++){
-                    cout << edges[i].data;
+                    cout << edges[i];
                     if(i != deg-1) cout << ", ";
                 }
                 cout << ")" << endl;
@@ -152,22 +120,21 @@ int main() {
                 break;
             }
             case 'r': {
-                char label;
+                int label;
                 cin >> label;
-                Edge e{label};
-                graph->removeEdge(e);
+                graph->removeEdge(label);
                 cout << "Removed edge " << label << endl;
                 break;
             }
             case 'd': {
-                string name;
+                char name;
                 cin >> name;
-                Vertex* vertices = graph->vertices();
-                Vertex v;
-                for(int i=0;i<graph->numVertices();i++)
-                    if(vertices[i].data==name) v=vertices[i];
-                graph->removeVertex(v);
+                graph->removeVertex(name);
                 cout << "Removed vertex " << name << endl;
+                break;
+            }
+            case 'P': {
+                graph->print();
                 break;
             }
             case 'x':
@@ -179,6 +146,8 @@ int main() {
         }
     } while(op != 'x');
 
-    delete graph;
+    // delete via derived pointer to avoid undefined behavior (Graph has no virtual destructor)
+    GraphMatrix* gm = static_cast<GraphMatrix*>(graph);
+    delete gm;
     return 0;
 }
