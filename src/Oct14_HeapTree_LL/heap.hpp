@@ -31,7 +31,7 @@ class Heap {
 
 	node* getLastNode(){
 		node* n = tree->getRoot();
-		if(!n) return;
+		if(!n) return nullptr;
 		node* last;
 		queue<node*> q;
 		q.push(n);

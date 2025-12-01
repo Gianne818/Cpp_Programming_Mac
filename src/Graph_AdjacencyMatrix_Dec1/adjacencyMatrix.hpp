@@ -1,8 +1,10 @@
 #include <iostream>
+#include <stdexcept>
+#include <string>
 #include "graph.hpp"
+using namespace std;
 
 class GraphMatrix : public Graph {
-private:
     int cap = 10;
     int matrix[10][10];   // 0 means no edge, otherwise stores the edge label (int)
     char s_vertices[10];  // labels for vertices
@@ -10,64 +12,92 @@ private:
     int s_edges[100];     // list of edge labels (max 100 for 10x10)
     int num_edge;
 
-    int indexOf(char v) {
-        for (int i = 0; i < num_vert; i++)
-            if (s_vertices[i] == v) return i;
+    int indexOf(char v){
+        for (int i = 0; i<num_vert; i++){
+            if(s_vertices[i] == v){
+                return i;
+            }
+        }
         return -1;
     }
 
 public:
-    GraphMatrix() : num_vert(0), num_edge(0) {
-        for (int i = 0; i < cap; i++)
-            for (int j = 0; j < cap; j++)
-                matrix[i][j] = 0;
-        for (int i = 0; i < 100; i++) s_edges[i] = 0;
+    GraphMatrix(){
+        num_vert = 0;
+        num_edge = 0;
     }
 
-    int numVertices() override { return num_vert; }
-
-    char* vertices() override { return s_vertices; }
-
-    int numEdges() override { return num_edge; }
-
-    int* edges() override {
-        if (num_edge == 0) return nullptr;
-        int* allEdges = new int[num_edge];
-        for (int k = 0; k < num_edge; k++) allEdges[k] = s_edges[k];
-        return allEdges;
+    int numVertices(){
+        return num_vert;
     }
 
-    int getEdge(char u, char v) override {
-        int ui = indexOf(u), vi = indexOf(v);
-        if (ui == -1 || vi == -1) return -1;
-        return matrix[ui][vi];
+    char* vertices(){
+        return s_vertices;
     }
 
-    char* endVertices(int e) override {
-        for (int i = 0; i < num_vert; i++)
-            for (int j = 0; j < num_vert; j++)
-                if (matrix[i][j] == e) {
-                    char* ends = new char[2];
-                    ends[0] = s_vertices[i];
-                    ends[1] = s_vertices[j];
-                    return ends;
+    int numEdges(){
+        return num_edge;
+    }
+
+    int* edges(){
+        if(num_edge == 0) return nullptr;
+        int* tempArr = new int[num_edge];
+        for (int i = 0 ; i<num_edge; i++){
+            tempArr[i] = s_edges[i];
+        }
+        return tempArr;
+    }
+
+    int getEdge(char u, char v){
+        int uIndex = indexOf(u);
+        int vIndex = indexOf(v);
+
+        if(uIndex == -1 || vIndex == -1){
+            return -1;
+        }
+        return matrix[uIndex][vIndex];
+    }
+
+   char* endVertices(int e){
+    char* tempArr = new char[2];
+        for (int i = 0; i<num_vert; i++){
+            for (int j = 0; j<num_vert; j++){
+                if(matrix[i][j] == e){
+                    tempArr[0] = s_vertices[i];
+                    tempArr[1] = s_vertices[j];
+                    return tempArr;
                 }
-        return nullptr;
-    }
+            }
+        }
+    return nullptr;
+   }
 
-    char getOpposite(char v, int e) override {
-        int vi = indexOf(v);
-        if (vi == -1) return '\0';
-        for (int i = 0; i < num_vert; i++)
-            for (int j = 0; j < num_vert; j++)
-                if (matrix[i][j] == e) {
-                    if (vi == i) return s_vertices[j];
-                    if (vi == j) return s_vertices[i];
+   char getOpposite(char v, int e){
+        for (int i = 0; i<num_vert; i++){
+            for (int j = 0; j<num_vert; j++){
+                if(matrix[i][j] == e){
+                    if(s_vertices[i] == v) return s_vertices[j];
+                    if(s_vertices[j] == v) return s_vertices[i];
                 }
+            }
+        }
         return '\0';
-    }
+   }
 
-    int outDegree(char v) override {
+   // this version compares the indices
+    // char getOpposite(char v, int e) {
+    //     int vi = indexOf(v);
+    //     if (vi == -1) return '\0';
+    //     for (int i = 0; i < num_vert; i++)
+    //         for (int j = 0; j < num_vert; j++)
+    //             if (matrix[i][j] == e) {
+    //                 if (vi == i) return s_vertices[j];
+    //                 if (vi == j) return s_vertices[i];
+    //             }
+    //     return '\0';
+    // }
+
+    int outDegree(char v) {
         int vi = indexOf(v);
         if (vi == -1) return 0;
         int deg = 0;
@@ -75,8 +105,7 @@ public:
             if (matrix[vi][j] != 0) deg++;
         return deg;
     }
-
-    int* outgoingEdges(char v) override {
+    int* outgoingEdges(char v) {
         int deg = outDegree(v);
         if (deg == 0) return nullptr;
         int* outEdges = new int[deg];
@@ -86,8 +115,7 @@ public:
                 outEdges[k++] = matrix[vi][j];
         return outEdges;
     }
-
-    int inDegree(char v) override {
+    int inDegree(char v) {
         int vi = indexOf(v);
         if (vi == -1) return 0;
         int deg = 0;
@@ -106,24 +134,27 @@ public:
                 inEdges[k++] = matrix[i][vi];
         return inEdges;
     }
-
-    char insertVertex(char x) override {
+    char insertVertex(char x) {
+        if (indexOf(x) != -1) {
+            string msg = string("already has vertex: ") + x;
+            throw logic_error(msg);
+        }
         if (num_vert < cap) s_vertices[num_vert++] = x;
         return x;
     }
-
-    int insertEdge(char u, char v, int x) override {
+    int insertEdge(char u, char v, int x) {
         int ui = indexOf(u), vi = indexOf(v);
         if (ui == -1 || vi == -1) return -1;
-        if (matrix[ui][vi] == 0) {
-            matrix[ui][vi] = x;
-            if (num_edge < 100) s_edges[num_edge++] = x;
-            return x;
+        if (matrix[ui][vi] != 0) {
+            int existing = matrix[ui][vi];
+            string msg = string("already has edge from ") + u + " to " + v + ": " + to_string(existing);
+            throw logic_error(msg);
         }
-        return matrix[ui][vi];
+        matrix[ui][vi] = x;
+        if (num_edge < 100) s_edges[num_edge++] = x;
+        return x;
     }
-
-    void removeVertex(char v) override {
+    void removeVertex(char v) {
         int vi = indexOf(v);
         if (vi == -1) return;
 
@@ -171,7 +202,7 @@ public:
         num_vert--;
     }
 
-    void removeEdge(int e) override {
+    void removeEdge(int e) {
         for (int i = 0; i < num_vert; i++)
             for (int j = 0; j < num_vert; j++)
                 if (matrix[i][j] == e) {
@@ -186,9 +217,7 @@ public:
                 }
     }
     
-    void print() override {
-        using std::cout;
-        using std::endl;
+    void print() {
         cout << "Vertices: (";
         for (int i = 0; i < num_vert; i++) {
             cout << s_vertices[i];

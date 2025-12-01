@@ -12,17 +12,25 @@ int main() {
             case 'v': {
                 char name;
                 cin >> name;
-                char u = graph->insertVertex(name);
-                cout << "Inserted vertex " << u << endl;
+                try {
+                    char u = graph->insertVertex(name);
+                    cout << "Inserted vertex " << u << endl;
+                } catch (const std::logic_error &ex) {
+                    cout << "Error: " << ex.what() << endl;
+                }
                 break;
             }
             case 'e': {
                 char uName, vName;
                 int label;
                 cin >> uName >> vName >> label;
-                int edge = graph->insertEdge(uName, vName, label);
-                if (edge == -1) cout << "Failed to insert edge (missing vertex)" << endl;
-                else cout << "Inserted edge " << edge << " from " << uName << " to " << vName << endl;
+                try {
+                    int edge = graph->insertEdge(uName, vName, label);
+                    if (edge == -1) cout << "Failed to insert edge (missing vertex)" << endl;
+                    else cout << "Inserted edge " << edge << " from " << uName << " to " << vName << endl;
+                } catch (const logic_error &ex) {
+                    cout << "Error: " << ex.what() << endl;
+                }
                 break;
             }
             case 'n':
@@ -33,11 +41,7 @@ int main() {
                 break;
             case 'p': {
                 cout << "(";
-                for(int i=0;i<graph->numVertices();i++){
-                    cout << graph->vertices()[i];
-                    if(i != graph->numVertices()-1) cout << ", ";
-                }
-                cout << ")" << endl;
+                graph->print();
                 break;
             }
             case 'q': {
