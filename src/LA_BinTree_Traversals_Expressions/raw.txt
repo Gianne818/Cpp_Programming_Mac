@@ -111,11 +111,11 @@ using namespace std;
 node* opInput(MyBinaryTree* tree, string prompt, node* parent);
 
 int main(void) {
-    MyBinaryTree* tree = new MyBinaryTree();
-    char op;
-    int input, ind;
-    node* nodes[100];
-    int res;
+	MyBinaryTree* tree = new MyBinaryTree();
+	char op;
+	int input, ind;
+	node* nodes[100];
+	int res;
     tree->root = opInput(tree, "root", NULL);
     do {
         cout << "Op: ";
@@ -134,39 +134,36 @@ int main(void) {
                 cout << "Invalid operation" << endl;
         }
     } while (op != 'x');
-    return 0;
+	return 0;
 }
 
 node* opInput(MyBinaryTree* tree, string prompt, node* parent) {
     string input;
-    node* n = nullptr;
-    cout << "Enter " << prompt << ": ";
-    cin >> input;
+    node* n;
+	cout << "Enter " << prompt << ": ";
+	cin >> input;
     switch (input[0]) {
         // TODO add cases for operations and default case for numbers
         case '+':
         case '-':
-        case '/':
         case '*':
-            n = tree->create_node(input, parent);
-            opInput(tree, "left of " + n->elem, n);
-            opInput(tree, "right of " + n->elem, n);
-            break;
-            
+        case '/':
+        
+        n = tree->create_node(input, parent);
+        n->left = opInput(tree, "left of " + input, n);
+        n->right = opInput(tree, "right of " + input, n);
+        break;
+        
         default:
-            n = tree->create_node(input, parent);
-            if(parent){
-                if(!parent->left){
-                    tree->addLeft(parent, input);
-                } else if (!parent->right){
-                    tree->addRight(parent, input);
-                }
-            }
-            break;
+        n = tree->create_node(input, parent);
+        break;
+        
     }
     return n;
-    
 }
+
+#include <string>
+using namespace std;
 
 #include <string>
 using namespace std;
@@ -179,27 +176,17 @@ struct node {
 
     // TODO evaluate method
     int evaluate() {
-        int answer = 0;
-        if(isdigit(this->elem[0])){
-            return stoi(this->elem);
+        if(isdigit(elem[0])){
+            return stoi(elem);
         }
         
-        if(this->elem[0]=='+' || this->elem[0]=='-' || this->elem[0]=='*' || this->elem[0]=='/'){
-            int b = this->right->evaluate();
-            int a = this->left->evaluate();
-            if(this->elem[0]=='+'){
-                return a + b;
-            }
-            if(this->elem[0]=='-'){
-                return a - b;
-            }
-            if(this->elem[0]=='*'){
-                return a * b;
-            }
-            if(this->elem[0]=='/'){
-                return a / b;
+        else {
+            switch(elem[0]){
+             case '+': return left->evaluate() + right->evaluate(); 
+             case '-': return left->evaluate() - right->evaluate(); 
+             case '*': return left->evaluate() * right->evaluate();
+             case '/': return left->evaluate() / right->evaluate(); 
             }
         }
-    return -1;
     }
 };

@@ -20,13 +20,21 @@ class BinTree {
     node* root;
     int size;
 
+    
+
 public:
     BinTree(){
         root = nullptr;
         size = 0;
     }
 
-
+    node* create_node(string input, node* parent){
+        node* n = new node();
+        n->elem = input;
+        n->parent = parent;
+        n->left = nullptr;
+        n->right = nullptr;
+    }
     void setRoot(node* n){
         root = n;
         size++;

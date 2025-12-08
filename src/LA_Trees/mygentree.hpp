@@ -21,7 +21,7 @@ public:
         node* n = new node();
         n->elem = num;
         n->children = new node*[10];
-        n->parent = nullptr;\
+        n->parent = nullptr;
         n->num_child = 0;
         
         root = n;
